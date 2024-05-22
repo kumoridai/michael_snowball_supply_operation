@@ -2076,14 +2076,20 @@ class OverwriteScene extends Phaser.Scene {
         });
 
         // Twitterシェアボタン（ここではテキストで代用）
-        let shareText = this.add.text(220, 400, 'Twitterにシェア', {
+        let shareText = this.add.text(300, 400, 'X(Twitter)にシェア', {
             fontSize: '24px',
             fill: '#0080FF' ,
             fontFamily: 'Corporate-Logo-Rounded-Bold',
         })
 
         .setSize(24)
-
+        .on('pointerover', function() {
+            shareText.setStyle({ fill: '#ff0' });  // マウスオーバー時に色を変更
+        })
+        .on('pointerout', function() {
+            shareText.setStyle({ fill: '#0080FF' });  // マウスアウト時に元の色に戻す
+        })
+        .setOrigin(0.5,0.5)
         .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
 
         shareText.setInteractive({ useHandCursor: true });
@@ -2094,7 +2100,7 @@ class OverwriteScene extends Phaser.Scene {
     }
     shareOnTwitter(score) {
         const gameurl =`https://kumoridai.github.io/michael_snowball_supply_operation/`
-        const tweetText = `エンジェリック・シャイニーレッドで祝福を${score}集めた！ #ミカエルの雪玉補給大作戦\n${gameurl}`;
+        const tweetText = `エンジェリック・シャイニーレッドでクリスマスパワーを${score}集めた！ #ミカエルの雪玉補給大作戦\n${gameurl}`;
         const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
         //window.open(url, '_blank'); //PCの場合はこっちにするのが望ましい 
         window.open(url, '_self');//モバイルのポップアップブロックを受けないのはこっち
@@ -2233,88 +2239,14 @@ class OpeningScene extends Phaser.Scene {
     constructor() {
         super({ key: 'HowToPlayScene' });
     }
-
+    preload() {
+        this.load.image('howtoplay', 'assets/howtoplay.png'); 
+    }
     create() {
         // 背景画像を表示
-        this.background = this.add.image(300, 400, 'top_background').setScale(0.5);
+        this.background = this.add.image(300, 400, 'howtoplay').setScale(0.5);
         
-        // タイトル
-        this.add.text(300, 50, '遊び方', {
-            fontSize: '48px',
-            fill: '#DD0000',
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-            stroke: '#ffffff',      // 縁取りの色
-            strokeThickness: 6      // 縁取りの太さ
-        })
-        .setOrigin(0.5)
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        // 世界観の説明
-        this.add.text(50, 100, '2023年のクリスマスイベント「天使と悪魔の雪合戦！」において、\n本編に登場しなかったミカエルが、天使チーム「エンジェリック・シャイニーレッド」の\n雪玉補給係だったのではないか？という妄想を形にしたゲームです。\n\nプレイヤーはミカエルになり、天使チームに所属します。\nたくさん雪玉を作って天使チームの勝利を目指し、雪合戦を盛り上げましょう。', {
-            fontSize: '16px',
-            fill: '#000000',
-            wordWrap: { width: 500 },
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        // 操作方法の説明
-        this.add.text(50, 250, '操作方法', {
-            fontSize: '28px',
-            fill: '#DD1500',
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        this.add.text(50, 290, '・マウス操作もしくはタッチ操作のみ使用します。\n・雪玉製作フェーズでは、長押ししてタイミング良く離すことで、雪玉を作ります。\n・雪合戦フェーズでは、画面を左右にスワイプし、飛んでくる雪玉を避けます。', {
-            fontSize: '16px',
-            fill: '#000000',
-            wordWrap: { width: 500 },
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        // ゲームの流れの説明
-        this.add.text(50, 370, 'ゲームの流れ', {
-            fontSize: '28px',
-            fill: '#DD1500',
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        // 雪玉製作フェーズの説明
-        this.add.text(50, 410, '雪玉製作フェーズ', {
-            fontSize: '20px',
-            fill: '#D02D32',
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        this.add.text(50, 440, '・天使AIたちが要求する大きさの雪玉を作成しましょう。\n・1つまで雪玉を自動でキープできます。\n・雪玉を作っている間は手がかじかんでいき、作るのが遅くなっていきます。\n・作った雪玉は、この後の雪合戦フェーズで天使AIたちが使います。', {
-            fontSize: '16px',
-            fill: '#000000',
-            wordWrap: { width: 500 },
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        // 雪合戦フェーズの説明
-        this.add.text(50, 540, '雪合戦フェーズ', {
-            fontSize: '20px',
-            fill: '#D02D32',
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        this.add.text(50, 570, '・天使AIと悪魔AIたちの雪合戦が始まります。\n・ミカエルはあくまで補給係。大量に飛び交う雪玉を避けることに専念しましょう。\n・相手チームに雪玉を当てて雪合戦を盛り上げると、\n  神雪の杯にクリスマスパワーが溜まっていきます。\n・神雪の杯がいっぱいになり、雪合戦の時間が終わったらゲーム終了です。\n・溜めたクリスマスパワーが多いチームの勝利となります。', {
-            fontSize: '16px',
-            fill: '#000000',
-            wordWrap: { width: 500 },
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
-
-        let backText = this.add.text(300, 745, '画面タップで戻る', {
+        let backText = this.add.text(300, 735, '画面タップで戻る', {
             fontSize: '20px',
             fill: '#100D32',
             fontFamily: 'Corporate-Logo-Rounded-Bold',
@@ -2324,13 +2256,6 @@ class OpeningScene extends Phaser.Scene {
         .setOrigin(0.5)
         .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
 
-        this.add.text(590, 790, '詳しくはツイートを参照してください\n#クラコンフリー2024 @kumoridai', {
-            fontSize: '12px',
-            fill: '#000000',
-            fontFamily: 'Corporate-Logo-Rounded-Bold',
-        })
-        .setOrigin(1)
-        .setPadding(0, 4, 0, 0); //日本語の上部の文字欠けを強引に解決するpadding
         // 画面全体をタップで反応させる
         this.input.on('pointerup', () => {
             this.scene.start('OpeningScene');
