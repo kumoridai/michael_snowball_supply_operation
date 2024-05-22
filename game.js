@@ -2099,7 +2099,7 @@ class OverwriteScene extends Phaser.Scene {
 
     }
     shareOnTwitter(score) {
-        const gameurl =`https://kumoridai.github.io/michael_snowball_supply_operation/`
+        const gameurl =`https://x.com/kumoridai/status/1793245461681459691`
         const tweetText = `エンジェリック・シャイニーレッドでクリスマスパワーを${score}集めた！ #ミカエルの雪玉補給大作戦\n${gameurl}`;
         const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
         //window.open(url, '_blank'); //PCの場合はこっちにするのが望ましい 
